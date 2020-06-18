@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>study</title>
+    <script type="text/javascript">
+        var arr = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+        window.onload = function () {
+            for (i = 2010; i <= 2050; i+=2) {
+                opt = new Option(i, i);
+                document.getElementById("year").options.add(opt);
+            }
+            for (i = 1; i <= 12; i++) {
+                opt = new Option(i, i);
+                document.getElementById("month").options.add(opt);
+            }
+            for (i = 1; i <= 31; i++) {
+                opt = new Option(i, i);
+                document.getElementById("day").options.add(opt);
+            }
+        }
+        function change() {
+            var iyear = document.getElementById("day").selectedIndex;
+            iday = document.getElementById("day").options[iyear].value;
+
+            iyear = document.getElementById("year").selectedIndex;
+            i = document.getElementById("year").options[iyear].value;
+            if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0)
+                arr[1] = 29;
+            else
+                arr[1] = 28;
+
+            document.getElementById("day").length = 28;
+
+            iyear = document.getElementById("month").selectedIndex;
+            imonth = document.getElementById("month").options[iyear].value;
+            for (i = 29; i <= arr[imonth - 1]; i++) {
+                opt = new Option(i, i);
+                document.getElementById("day").options.add(opt);
+            }
+            if (document.getElementById('day').length < iday)
+                document.getElementById("day").value = document.getElementById("day").length;
+            else
+                document.getElementById("day").value = iday;
+        }
+    </script>
+</head>
+<body>
+    <select id="year" onchange="change();"></select>
+    <select id="month" onchange="change();"></select>
+    <select id="day"></select>
+</body>
+</html>
