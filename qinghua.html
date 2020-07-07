@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>土味情话</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script><!-- axios-->
+    <link rel="shortcut icon" href="person.png">
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="土味情话爱了吗" @click="getjoke">
+        <p>第{{index}}条：{{qinghua}}</p>
+    </div>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                qinghua:"这条其实是一条土味情话",
+                index: 1
+            },
+            methods:{
+                getjoke:function () {
+                    var temp = this;
+                    axios.get("https://v1.alapi.cn/api/qinghua").then(//状态正常执行第一个function，不正常执行第二个
+                        function (response) {
+                             // console.log(response.data.data.content);
+                            temp.qinghua = response.data.data.content ;
+                            temp.index++;
+                        },function (err) { alert("api错误！")
+                        }
+                    )
+                }
+            }
+        });
+    </script>
+</body>
+</html>
