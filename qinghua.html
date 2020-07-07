@@ -9,24 +9,43 @@
 </head>
 <body>
     <div id="app">
-        <input type="button" value="土味情话爱了吗" @click="getjoke">
+
         <p>第{{index}}条：{{qinghua}}</p>
+        <input type="button" value="土味情话爱了吗" @click="getqinghua">
+        <br>
+        <br>
+        <p>第{{idx}}条：{{joke}}</p>
+        <input type="button" value="这里的笑话真的好冷" @click="getjoke">
+
     </div>
     <script>
         var app = new Vue({
             el:"#app",
             data:{
                 qinghua:"这条其实是一条土味情话",
-                index: 1
+                index: 1,
+                joke:"这是一条笑话",
+                idx:1
             },
             methods:{
-                getjoke:function () {
+                getqinghua:function () {
                     var temp = this;
                     axios.get("https://v1.alapi.cn/api/qinghua").then(//状态正常执行第一个function，不正常执行第二个
                         function (response) {
                              // console.log(response.data.data.content);
                             temp.qinghua = response.data.data.content ;
                             temp.index++;
+                        },function (err) { alert("api错误！")
+                        }
+                    )
+                },
+                getjoke:function () {
+                    var temp = this;
+                    axios.get("https://autumnfish.cn/api/joke").then(//状态正常执行第一个function，不正常执行第二个
+                        function (response) {
+                            //  console.log(response.data);
+                            temp.joke = response.data ;
+                            temp.idx++;
                         },function (err) { alert("api错误！")
                         }
                     )
